@@ -41,4 +41,4 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/docstream
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: postgres
-        run: ./mvnw test -B
+        run: chmod +x mvnw && ./mvnw test -B
