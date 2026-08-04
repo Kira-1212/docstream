@@ -9,7 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import com.docstream.docstream.messaging.producer.DocumentIngestionProducer;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +24,8 @@ class DocumentServiceTest {
 
     @Mock
     private DocumentRepository documentRepository;
-
+    @Mock
+    private DocumentIngestionProducer ingestionProducer;
     @InjectMocks
     private DocumentService documentService;
 

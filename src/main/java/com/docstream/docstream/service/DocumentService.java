@@ -10,14 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-
+import com.docstream.docstream.messaging.event.DocumentIngestionEvent;
+import com.docstream.docstream.messaging.producer.DocumentIngestionProducer;
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class DocumentService {
 
     private final DocumentRepository documentRepository;
-
+    private final DocumentIngestionProducer ingestionProducer;
     @Transactional
     public Document createDocument(String title, String content) {
         log.info("Creating document with title: {}", title);
@@ -28,6 +29,11 @@ public class DocumentService {
                 .build();
         Document saved = documentRepository.save(document);
         log.info("Document created with id: {}", saved.getId());
+
+        DocumentIngestionEvent event = DocumentIngestionEvent.of(
+                saved.getId(), saved.getTitle(), saved.getContent());
+        ingestionProducer.publish(event);
+
         return saved;
     }
 
